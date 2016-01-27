@@ -489,6 +489,22 @@ public class CmdLine
         return (this);
     }
     
+    
+    /**
+     * Parse the command line arguments.
+     *
+     * @param args
+     *            The arguments from the command line.
+     * @param commandListener
+     *            A listener that will handle the callbacks.
+     * @return The CmdLine instance. Used for chaining calls.
+     */
+    public CmdLine parse(final String[] args, final CommandListener commandListener )
+    {
+        this.setCommandListener(commandListener);
+        return (this.parse(args));
+    }
+    
     /*
      * Processes the String tokens and creates Command.
      */

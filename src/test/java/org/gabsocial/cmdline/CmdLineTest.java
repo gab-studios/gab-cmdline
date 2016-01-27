@@ -500,6 +500,86 @@ public class CmdLineTest
     }
     
     @Test
+    public void testParseWithListener()
+    {
+        final CmdLineListener listener = new CmdLineListener();
+        
+        this._cmdline.defineCommand("file, !file, !files...");
+        
+        final String[] args = new String[5];
+        args[0] = "file";
+        args[1] = "=";
+        args[2] = "file1.txt";
+        args[3] = ",";
+        args[4] = "file2.txt";
+        
+        try
+        {
+            this._cmdline.parse(args, listener);
+            
+            Assert.assertTrue(listener.getCount() == 1);
+            
+            final Command command = listener.getCommand("file");
+            Assert.assertTrue(command != null);
+            Assert.assertTrue(command.hasVariables());
+            
+            List<String> values = command.getValues("file");
+            Assert.assertTrue(values != null);
+            Assert.assertTrue(values.size() == 1);
+            
+            String value = values.get(0);
+            Assert.assertTrue(value != null);
+            Assert.assertTrue(value.length() > 0);
+            Assert.assertTrue(value.equals("file1.txt"));
+            
+            Assert.assertTrue(true);
+        }
+        catch (final Exception e)
+        {
+            Assert.fail(e.toString());
+        }
+    }
+    
+    @Test
+    public void testChainingCommand()
+    {
+        final CmdLineListener listener = new CmdLineListener();
+        
+        final String[] args = new String[5];
+        args[0] = "file";
+        args[1] = "=";
+        args[2] = "file1.txt";
+        args[3] = ",";
+        args[4] = "file2.txt";
+        
+        try
+        {
+            this._cmdline.defineCommand("file, !file, !files...").parse(args, listener);
+            
+            Assert.assertTrue(listener.getCount() == 1);
+            
+            final Command command = listener.getCommand("file");
+            Assert.assertTrue(command != null);
+            Assert.assertTrue(command.hasVariables());
+            
+            List<String> values = command.getValues("file");
+            Assert.assertTrue(values != null);
+            Assert.assertTrue(values.size() == 1);
+            
+            String value = values.get(0);
+            Assert.assertTrue(value != null);
+            Assert.assertTrue(value.length() > 0);
+            Assert.assertTrue(value.equals("file1.txt"));
+            
+            Assert.assertTrue(true);
+        }
+        catch (final Exception e)
+        {
+            Assert.fail(e.toString());
+        }
+    }
+    
+    @Test
     public void testDefineMultipleCommand1()
     {
         final CmdLineListener listener = new CmdLineListener();
@@ -553,8 +633,7 @@ public class CmdLineTest
     public void testDefineMultipleCommand2()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener)
-            .setVersion("1.1.0")
+        this._cmdline.setApplicationName("myApp").setVersion("1.1.0")
             .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt", "#Load files into the system")
             .defineCommand("-l", "--list", "#List the files loaded into the system")
             .defineCommand("-q", "--quit", "#Quit the application");
@@ -568,7 +647,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            this._cmdline.parse(args, listener);
             
             Assert.assertTrue(listener.getCount() == 3);
             
