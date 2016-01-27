@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.gabsocial.gabcmdline</groupId>
 	<artifactId>gab-cmdline</artifactId>
-	<version>0.1.alpha</version>
+	<version>0.2.alpha</version>
 	<packaging>jar</packaging>
 
 	<name>GAB Social Command Line Argument Parser</name>
