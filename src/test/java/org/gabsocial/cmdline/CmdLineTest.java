@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  */
 public class CmdLineTest
-{    
+{
     private class CmdLineListener implements CommandListener
     {
         
@@ -61,23 +61,16 @@ public class CmdLineTest
         }
     }
     
-    CmdLine _cmdline;
-    
-    public CmdLine getCmdLine()
-    {
-        return (this._cmdline);
-    }
-    
     @Before
     public void setUp()
     {
-        this._cmdline = new CmdLine();
+        // void
     }
     
     @After
     public void tearDown()
     {
-        this._cmdline.close();
+        CmdLine.clear();
     }
     
     @Test
@@ -85,17 +78,16 @@ public class CmdLineTest
     {
         
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("file , !fileName1,:file\\d.txt,       #Load files into the system");
+        CmdLine.defineCommand("file , !fileName1,:file\\d.txt,       #Load files into the system");
         
         final String[] args = new String[1];
         args[0] = "file=file1.txt";
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -124,17 +116,16 @@ public class CmdLineTest
     public void testDefineCommand1()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("file, !fileName1, :file\\d.txt, #Load a files into the system");
+        CmdLine.defineCommand("file, !fileName1, :file\\d.txt, #Load a files into the system");
         
         final String[] args = new String[1];
         args[0] = "file = file1.txt";
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -164,17 +155,16 @@ public class CmdLineTest
     public void testDefineCommand1a()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, :file\\d.txt, #Load a files into the system");
+        CmdLine.defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, :file\\d.txt, #Load a files into the system");
         
         final String[] args = new String[1];
         args[0] = "-f=file1.txt, file2.txt, file3.txt";
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -221,10 +211,9 @@ public class CmdLineTest
     public void testDefineCommand1b()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, :file\\d.txt, #Load a files into the system");
+        CmdLine.defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, :file\\d.txt, #Load a files into the system");
         
         final String[] args = new String[3];
         args[0] = "-f";
@@ -233,7 +222,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -262,10 +251,9 @@ public class CmdLineTest
     public void testDefineCommand1c()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, #Load a files into the system");
+        CmdLine.defineCommand("-f, --file, !fileName1, ?fileName2, ?fileName3, #Load a files into the system");
         
         final String[] args = new String[3];
         args[0] = "-f";
@@ -274,7 +262,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -303,10 +291,9 @@ public class CmdLineTest
     public void testDefineCommand1d()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("-f, --file, !fileName1, ?fileNames..., #Load a files into the system");
+        CmdLine.defineCommand("-f, --file, !fileName1, ?fileNames..., #Load a files into the system");
         
         final String[] args = new String[7];
         args[0] = "-f";
@@ -319,7 +306,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -362,10 +349,9 @@ public class CmdLineTest
     public void testDefineCommand1e()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline
-                .defineCommand("-f, --file, !fileName1, ?fileNames..., #Load a files into the system, file");
+        CmdLine.defineCommand("-f, --file, !fileName1, ?fileNames..., #Load a files into the system, file");
         
         final String[] args = new String[7];
         args[0] = "file";
@@ -378,7 +364,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -421,9 +407,9 @@ public class CmdLineTest
     public void testDefineCommand1f()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.defineCommand("file, !file");
+        CmdLine.defineCommand("file, !file");
         
         final String[] args = new String[3];
         args[0] = "file";
@@ -432,7 +418,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -461,9 +447,9 @@ public class CmdLineTest
     public void testDefineCommand1g()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.defineCommand("file, !file, !files...");
+        CmdLine.defineCommand("file, !file, !files...");
         
         final String[] args = new String[5];
         args[0] = "file";
@@ -474,7 +460,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -504,7 +490,7 @@ public class CmdLineTest
     {
         final CmdLineListener listener = new CmdLineListener();
         
-        this._cmdline.defineCommand("file, !file, !files...");
+        CmdLine.defineCommand("file, !file, !files...");
         
         final String[] args = new String[5];
         args[0] = "file";
@@ -515,7 +501,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args, listener);
+            CmdLine.parse(args, listener);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -554,7 +540,8 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.defineCommand("file, !file, !files...").parse(args, listener);
+            CmdLine.defineCommand("file, !file, !files...").parse(args,
+                    listener);
             
             Assert.assertTrue(listener.getCount() == 1);
             
@@ -583,14 +570,14 @@ public class CmdLineTest
     public void testDefineMultipleCommand1()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.setVersion("1.1.0");
-        this._cmdline.defineCommand("-f", "--file", "!fileNames...",
-                ":file\\d.txt", "#Load files into the system");
-        this._cmdline.defineCommand("-l", "--list",
+        CmdLine.setVersion("1.1.0");
+        CmdLine.defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt",
+                "#Load files into the system");
+        CmdLine.defineCommand("-l", "--list",
                 "#List the files loaded into the system");
-        this._cmdline.defineCommand("-q", "--quit", "#Quit the application");
+        CmdLine.defineCommand("-q", "--quit", "#Quit the application");
         
         final String[] args = new String[4];
         args[0] = "-f";
@@ -600,7 +587,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 2);
             
@@ -633,10 +620,14 @@ public class CmdLineTest
     public void testDefineMultipleCommand2()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setApplicationName("myApp").setVersion("1.1.0")
-            .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt", "#Load files into the system")
-            .defineCommand("-l", "--list", "#List the files loaded into the system")
-            .defineCommand("-q", "--quit", "#Quit the application");
+        CmdLine
+                .setApplicationName("myApp")
+                .setVersion("1.1.0")
+                .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt",
+                        "#Load files into the system")
+                .defineCommand("-l", "--list",
+                        "#List the files loaded into the system")
+                .defineCommand("-q", "--quit", "#Quit the application");
         
         final String[] args = new String[5];
         args[0] = "-f";
@@ -647,7 +638,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args, listener);
+            CmdLine.parse(args, listener);
             
             Assert.assertTrue(listener.getCount() == 3);
             
@@ -693,16 +684,16 @@ public class CmdLineTest
     public void testSystemPropertyCommand1()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.setVersion("1.1.0");
+        CmdLine.setVersion("1.1.0");
         
         final String[] args = new String[1];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             final Command command = listener
                     .getCommand("-Dcom.gabsocial.cmdline.debug");
@@ -733,9 +724,9 @@ public class CmdLineTest
     public void testSystemPropertyCommand2()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.setVersion("1.1.0");
+        CmdLine.setVersion("1.1.0");
         
         final String[] args = new String[4];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
@@ -745,7 +736,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 4);
             
@@ -777,11 +768,11 @@ public class CmdLineTest
     public void testSystemPropertyCommand3()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.defineCommand("file, !file, !files..., :file\\d.txt");
+        CmdLine.defineCommand("file, !file, !files..., :file\\d.txt");
         
-        this._cmdline.setVersion("1.1.0");
+        CmdLine.setVersion("1.1.0");
         
         final String[] args = new String[4];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
@@ -791,7 +782,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 2);
             
@@ -846,11 +837,11 @@ public class CmdLineTest
     public void testSystemPropertyCommand4()
     {
         final CmdLineListener listener = new CmdLineListener();
-        this._cmdline.setCommandListener(listener);
+        CmdLine.setCommandListener(listener);
         
-        this._cmdline.defineCommand("file, !file, !files..., :file\\d.txt");
+        CmdLine.defineCommand("file, !file, !files..., :file\\d.txt");
         
-        this._cmdline.setVersion("1.1.0");
+        CmdLine.setVersion("1.1.0");
         
         final String[] args = new String[5];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
@@ -861,7 +852,7 @@ public class CmdLineTest
         
         try
         {
-            this._cmdline.parse(args);
+            CmdLine.parse(args);
             
             Assert.assertTrue(listener.getCount() == 3);
             
@@ -904,8 +895,7 @@ public class CmdLineTest
             Assert.assertTrue(value.length() > 0);
             Assert.assertTrue(value.equals("file2.txt"));
             
-            command = listener
-                    .getCommand("-Dcom.gabsocial.cmdline.load");
+            command = listener.getCommand("-Dcom.gabsocial.cmdline.load");
             
             Assert.assertTrue(command != null);
             Assert.assertTrue(command.hasVariables());
