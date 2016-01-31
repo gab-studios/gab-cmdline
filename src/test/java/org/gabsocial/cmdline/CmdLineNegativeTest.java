@@ -19,9 +19,6 @@
 
 package org.gabsocial.cmdline;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.gabsocial.gabvalidate.ValidateException;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,23 +35,15 @@ import org.junit.Test;
 public class CmdLineNegativeTest
 {
     
-    CmdLine _cmdline;
-    
-    public CmdLine getCmdLine()
-    {
-        return (this._cmdline);
-    }
-    
     @Before
     public void setUp()
     {
-        this._cmdline = new CmdLine();
     }
     
     @After
     public void tearDown()
     {
-        this._cmdline.close();
+        CmdLine.clear();
     }
     
     @Test
@@ -64,8 +53,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline
-                    .defineCommand("file, !fileName, ?fileName, :file\\d.txt, #Load files into the system");
+            CmdLine.defineCommand("file, !fileName, ?fileName, :file\\d.txt, #Load files into the system");
             
             Assert.fail();
         }
@@ -82,8 +70,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline
-                    .defineCommand("file, file, !fileName, :file\\d.txt, #Load files into the system");
+            CmdLine.defineCommand("file, file, !fileName, :file\\d.txt, #Load files into the system");
             
             Assert.fail();
         }
@@ -100,8 +87,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline
-                    .defineCommand("file, !fileName, :file\\d.txt, :file\\d.txt, #Load files into the system");
+            CmdLine.defineCommand("file, !fileName, :file\\d.txt, :file\\d.txt, #Load files into the system");
             
             Assert.fail();
         }
@@ -118,8 +104,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline
-                    .defineCommand("file, !fileName, :file\\d.txt, #Load files into the system, #Load files into the system");
+            CmdLine.defineCommand("file, !fileName, :file\\d.txt, #Load files into the system, #Load files into the system");
             
             Assert.fail();
         }
@@ -136,8 +121,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline
-                    .defineCommand("file !fileName :file\\d.txt #Load files into the system");
+            CmdLine.defineCommand("file !fileName :file\\d.txt #Load files into the system");
             
             Assert.fail();
         }
@@ -154,7 +138,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand("file, !fileNames..., ?fileNames...");
+            CmdLine.defineCommand("file, !fileNames..., ?fileNames...");
             
             Assert.fail();
         }
@@ -172,7 +156,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand("file, ?fileNames..., !fileNames2...");
+            CmdLine.defineCommand("file, ?fileNames..., !fileNames2...");
             
             Assert.fail();
         }
@@ -185,19 +169,18 @@ public class CmdLineNegativeTest
     @Test
     public void testDefineCommand8()
     {
-
-        this._cmdline
-        .defineCommand("file, !file1, !file2");
-
+        
+        CmdLine.defineCommand("file, !file1, !file2");
+        
         final String[] args = new String[3];
         args[0] = "file";
         args[1] = "=";
         args[2] = "file1.txt";
-
+        
         try
         {
-            this._cmdline.parse(args);
-
+            CmdLine.parse(args);
+            
             Assert.fail();
         }
         catch (MissingException e)
@@ -209,19 +192,18 @@ public class CmdLineNegativeTest
     @Test
     public void testDefineCommand9()
     {
-
-        this._cmdline
-        .defineCommand("file, !file, !files...");
-
+        
+        CmdLine.defineCommand("file, !file, !files...");
+        
         final String[] args = new String[3];
         args[0] = "file";
         args[1] = "=";
         args[2] = "file1.txt";
-
+        
         try
         {
-            this._cmdline.parse(args);
-
+            CmdLine.parse(args);
+            
             Assert.fail();
         }
         catch (MissingException e)
@@ -233,19 +215,18 @@ public class CmdLineNegativeTest
     @Test
     public void testDefineCommand10()
     {
-
-        this._cmdline
-        .defineCommand("file, !file");
-
+        
+        CmdLine.defineCommand("file, !file");
+        
         final String[] args = new String[3];
         args[0] = "install";
         args[1] = "=";
         args[2] = "file1.txt";
-
+        
         try
         {
-            this._cmdline.parse(args);
-
+            CmdLine.parse(args);
+            
             Assert.fail();
         }
         catch (UnsupportedException e)
@@ -261,7 +242,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand("file, ?fileName1, !fileNames2");
+            CmdLine.defineCommand("file, ?fileName1, !fileNames2");
             
             Assert.fail();
         }
@@ -278,7 +259,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand("");
+            CmdLine.defineCommand("");
             
             Assert.fail();
         }
@@ -295,7 +276,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand();
+            CmdLine.defineCommand();
             
             Assert.fail();
         }
@@ -312,7 +293,7 @@ public class CmdLineNegativeTest
         try
         {
             
-            this._cmdline.defineCommand("    ");
+            CmdLine.defineCommand("    ");
             
             Assert.fail();
         }
