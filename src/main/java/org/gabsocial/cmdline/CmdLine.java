@@ -62,69 +62,69 @@ import org.gabsocial.gabvalidate.Validate;
 public class CmdLine
 {
     /*
-     * The maximum length allowed for any size - String, tokens, etc.
+     * A map that holds the key of a command string and a value of a command
+     * definition.
      */
-    private static final int                      MAX_LENGTH    = 256;
-
-    /*
-     * Regex to split the define command method
-     */
-    private static final String                   REGEX_PATTERN = "\\s*,\\s*";
-
-    /*
-     * The application name.
-     */
-    private static String                         s_applicationName;
+    private static final Map<String, CommandDefinition> COMMAND_DEFINITION_MAP;
 
     /*
      * The command line tokenizer
      */
-    private static CommandLineTokenizer           s_commandLineTokenizer;
+    private static final CommandLineTokenizer           COMMNAND_LINE_TOKENIZER;
+
+    /*
+     * Regex to split the define command method
+     */
+    private static final String                         DEFINED_COMMAND_REGEX_PARSE_PATTERN = "\\s*,\\s*";
+
+    /*
+     * The tokenizer that handles the defineCommand(xxxx) method.
+     */
+    private static final DefinedCommandTokenizer        DEFINED_COMMAND_TOKENIZER;
+
+    /*
+     * Support method chaining.
+     */
+    private static final CmdLine                        INSTANCE;
+
+    /*
+     * The maximum length allowed for any size - String, tokens, etc.
+     */
+    private static final int                            MAX_LENGTH                          = 256;
+
+    /*
+     * The application name.
+     */
+    private static String                               s_applicationName;
 
     /*
      * The listener that will handle commands as they are processed, if it is
      * set. May be 0 to 1.
      */
-    private static CommandListener                s_commandListener;
+    private static CommandListener                      s_commandListener;
 
     /*
-     * A map that holds the key of a command string and a value of a command
-     * definition.
+     * The application version.
      */
-    private static Map<String, CommandDefinition> s_commandMap;
-
-    /*
-     * The tokenizer that handles the defineCommand(xxxx) method.
-     */
-    private static DefinedCommandTokenizer        s_definedCommandTokenizer;
-
-    /*
-     * Support method chaining.
-     */
-    private static CmdLine                        s_instance;
+    private static String                               s_version;
 
     /*
      * Holds the variable names assigned to commands. Variable names are unique
      * across commands. One a variable is used by a command, another command
      * *may not use* that same variable name.
      */
-    private static Set<String>                    s_variableNameSet;
-
-    /*
-     * The application version.
-     */
-    private static String                         s_version;
+    private static final Set<String>                    VARIABLE_NAME_SET;
 
     /**
      * The CmdLine constructor.
      */
     static
     {
-        CmdLine.s_commandMap = new HashMap<String, CommandDefinition>();
-        CmdLine.s_variableNameSet = new HashSet<String>();
-        CmdLine.s_definedCommandTokenizer = new DefinedCommandTokenizer();
-        CmdLine.s_commandLineTokenizer = new CommandLineTokenizer();
-        CmdLine.s_instance = new CmdLine();
+        COMMAND_DEFINITION_MAP = new HashMap<String, CommandDefinition>();
+        VARIABLE_NAME_SET = new HashSet<String>();
+        DEFINED_COMMAND_TOKENIZER = new DefinedCommandTokenizer();
+        COMMNAND_LINE_TOKENIZER = new CommandLineTokenizer();
+        INSTANCE = new CmdLine();
     }
 
     /*
@@ -137,7 +137,7 @@ public class CmdLine
         assert (name.length() <= CmdLine.MAX_LENGTH) : "The parameter 'name' must be less than or equal to "
         + CmdLine.MAX_LENGTH;
 
-        if (!CmdLine.s_variableNameSet.add(name)) { throw (new DuplicateException(
+        if (!CmdLine.VARIABLE_NAME_SET.add(name)) { throw (new DuplicateException(
                 "Error: The variable '"
                         + name
                         + "' has already been defined.  Define a new variable name.")); }
@@ -151,11 +151,11 @@ public class CmdLine
     public static CmdLine clear()
     {
 
-        CmdLine.s_commandMap.clear();
-        CmdLine.s_variableNameSet.clear();
+        CmdLine.COMMAND_DEFINITION_MAP.clear();
+        CmdLine.VARIABLE_NAME_SET.clear();
         CmdLine.s_commandListener = null;
 
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /*
@@ -176,7 +176,7 @@ public class CmdLine
         final Command command = new Command(commandName);
         if (!tokens.isEmpty())
         {
-            final CommandDefinition commandDefinition = CmdLine.s_commandMap
+            final CommandDefinition commandDefinition = CmdLine.COMMAND_DEFINITION_MAP
                     .get(commandName);
 
             final String regex = commandDefinition.getRegexValue();
@@ -299,7 +299,7 @@ public class CmdLine
                     {
                         throw (new UnsupportedException(
                                 "Error: An optional variable has already been defined before this required variable.  "
-                                + "Required variables must be defined before optional variables.'"));
+                                        + "Required variables must be defined before optional variables.'"));
                     }
                     else
                     {
@@ -314,7 +314,7 @@ public class CmdLine
                     {
                         throw (new UnsupportedException(
                                 "Error: An optional variable has already been defined before this required variable.  "
-                                + "Required variables must be defined before optional variables.'"));
+                                        + "Required variables must be defined before optional variables.'"));
                     }
                     else if (xorListCount > 0)
                     {
@@ -409,7 +409,7 @@ public class CmdLine
                 && (nameArgs.length <= CmdLine.MAX_LENGTH)).testTrue()
                 .throwExceptionOnFailedValidation().validate();
 
-        final List<Token> tokens = CmdLine.s_definedCommandTokenizer
+        final List<Token> tokens = CmdLine.DEFINED_COMMAND_TOKENIZER
                 .tokenize(nameArgs);
 
         final CommandDefinition command = CmdLine
@@ -418,8 +418,8 @@ public class CmdLine
 
         for (final String name : names)
         {
-            final CommandDefinition existingCommand = CmdLine.s_commandMap.put(
-                    name, command);
+            final CommandDefinition existingCommand = CmdLine.COMMAND_DEFINITION_MAP
+                    .put(name, command);
             if (existingCommand != null) { throw (new DuplicateException(
                     "Error: The command '"
                             + name
@@ -427,7 +427,7 @@ public class CmdLine
         }
 
         // System.out.println(command);
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /**
@@ -468,11 +468,12 @@ public class CmdLine
     {
         Validate.defineString(nameArgs).testNotNullEmpty()
         .testMaxLength(CmdLine.MAX_LENGTH)
-                .throwExceptionOnFailedValidation().validate();
+        .throwExceptionOnFailedValidation().validate();
 
-        final String[] nameArgTokens = nameArgs.split(CmdLine.REGEX_PATTERN);
+        final String[] nameArgTokens = nameArgs
+                .split(CmdLine.DEFINED_COMMAND_REGEX_PARSE_PATTERN);
         CmdLine.defineCommand(nameArgTokens);
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /**
@@ -507,12 +508,12 @@ public class CmdLine
     {
         Validate.defineBoolean(
                 (args != null) && (args.length > 0)
-                        && (args.length <= CmdLine.MAX_LENGTH)).testTrue()
+                && (args.length <= CmdLine.MAX_LENGTH)).testTrue()
                 .throwExceptionOnFailedValidation().validate();
 
         final List<String> tokens = CmdLine.tokenizeCmdLineArgs(args);
         CmdLine.processCmdLineTokens(tokens);
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /**
@@ -546,7 +547,7 @@ public class CmdLine
         // System.out.println( "Processing token: " + tokenValue );
 
         // check to see that a command definition exists for the current token.
-        if (CmdLine.s_commandMap.containsKey(tokenValue))
+        if (CmdLine.COMMAND_DEFINITION_MAP.containsKey(tokenValue))
         {
             // if defined, then create a command.
             final Command command = CmdLine.createCommand(tokenValue, tokens);
@@ -587,7 +588,7 @@ public class CmdLine
             {
                 // Check to see if token is a defined command.
                 // if not defined, then the token is not supported.
-                if (!CmdLine.s_commandMap.containsKey(tokenValue))
+                if (!CmdLine.COMMAND_DEFINITION_MAP.containsKey(tokenValue))
                 {
                     throw (new UnsupportedException("Error: The command name '"
                             + tokenValue + "' is not defined."));
@@ -714,7 +715,7 @@ public class CmdLine
                             + pattern.toString() + "'.")); }
                 }
 
-                if (CmdLine.s_variableNameSet.contains(varName))
+                if (CmdLine.VARIABLE_NAME_SET.contains(varName))
                 {
                     command.addVariable(varName, argToken);
                 }
@@ -760,7 +761,8 @@ public class CmdLine
         else
         {
             while (!tokens.isEmpty()
-                    && !CmdLine.s_commandMap.containsKey(tokens.get(0)))
+                    && !CmdLine.COMMAND_DEFINITION_MAP.containsKey(tokens
+                            .get(0)))
             {
 
                 final String argToken = tokens.remove(0);
@@ -769,7 +771,7 @@ public class CmdLine
                         .processSystemProperty(argToken, tokens);
 
                 if (!processedSystemProperty
-                        && CmdLine.s_variableNameSet.contains(varName))
+                        && CmdLine.VARIABLE_NAME_SET.contains(varName))
                 {
 
                     boolean isMatch = true;
@@ -803,10 +805,10 @@ public class CmdLine
     {
         Validate.defineString(name).testNotNullEmpty()
         .testMaxLength(CmdLine.MAX_LENGTH)
-                .throwExceptionOnFailedValidation().validate();
+        .throwExceptionOnFailedValidation().validate();
 
         CmdLine.s_applicationName = name;
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /**
@@ -824,7 +826,7 @@ public class CmdLine
         .throwExceptionOnFailedValidation().validate();
 
         CmdLine.s_commandListener = commandListener;
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /**
@@ -841,7 +843,7 @@ public class CmdLine
         .throwExceptionOnFailedValidation().validate();
 
         CmdLine.s_version = version;
-        return (CmdLine.s_instance);
+        return (CmdLine.INSTANCE);
     }
 
     /*
@@ -853,13 +855,14 @@ public class CmdLine
         assert (args.length <= CmdLine.MAX_LENGTH) : "The parameter 'args' must be less than or equal to "
         + CmdLine.MAX_LENGTH;
 
-        final List<String> tokens = CmdLine.s_commandLineTokenizer
+        final List<String> tokens = CmdLine.COMMNAND_LINE_TOKENIZER
                 .tokenize(args);
         return (tokens);
     }
 
     private CmdLine()
     {
-        // block instance.
+        // block direct instance
     }
+
 }
