@@ -837,11 +837,10 @@ public class CmdLineTest
     public void testSystemPropertyCommand4()
     {
         final CmdLineListener listener = new CmdLineListener();
-        CmdLine.setCommandListener(listener);
         
-        CmdLine.defineCommand("file, !file, !files..., :file\\d.txt");
-        
-        CmdLine.setVersion("1.1.0");
+        CmdLine.defineCommand("file, !file, !files..., :file\\d.txt")
+            .setApplicationName("myApp")
+            .setVersion("1.1.0");
         
         final String[] args = new String[5];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
@@ -852,7 +851,7 @@ public class CmdLineTest
         
         try
         {
-            CmdLine.parse(args);
+            CmdLine.parse(args, listener);
             
             Assert.assertTrue(listener.getCount() == 3);
             
