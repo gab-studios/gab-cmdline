@@ -72,6 +72,11 @@ public class DefinedCommandTokenizer
     private static void createToken(final String inputString,
             final List<Token> tokenList)
     {
+        
+        assert( inputString != null && inputString.length() > 0 ) : "The parameter 'inputString' must not be null or empty";
+        assert( tokenList != null) : "The parameter 'tokenList' must not be null";
+        //TODO - add assert for max length.
+        
         if (inputString.startsWith("#"))
         {
             tokenList.add(new Token(Token.Type.DESCRIPTION, inputString
@@ -115,6 +120,11 @@ public class DefinedCommandTokenizer
     private static void handleListValue(final String inputString,
             final List<Token> tokenList)
     {
+        
+        assert( inputString != null && inputString.length() > 0 ) : "The parameter 'inputString' must not be null or empty";
+        assert( tokenList != null) : "The parameter 'tokenList' must not be null";
+        //TODO - add assert for max length.
+        
         if (inputString.startsWith("!") && inputString.endsWith("..."))
         {
             int length = inputString.length() - 3;
@@ -148,6 +158,8 @@ public class DefinedCommandTokenizer
      */
     protected List<Token> tokenize(final String[] args)
     {
+        //assert( args != null && args.length > 0 ) : "The parameter 'args' must not be null or empty";
+        //TODO - add assert for max length.
         
         // process spaces - taken care of by command line.
         final LinkedList<Token> tokenList = new LinkedList<Token>();

@@ -58,6 +58,10 @@ public class CommandLineTokenizer
      */
     protected List<String> tokenize(final String[] args)
     {
+        assert( args != null && args.length > 0 ) : "The parameter 'args' must not be null or empty";
+        
+        //TODO - add assert for max length.
+        
         final LogService logService = LogProvider.getProvider().getService();
         
         // process spaces - taken care of by command line.
