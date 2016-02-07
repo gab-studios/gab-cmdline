@@ -53,6 +53,23 @@ import org.gabsocial.gabvalidate.Validate;
  * 3. clear parser to release resources.
  *
  * CmdLine.clear();
+ * 
+ * CmdLine.defineCommand("xxxx") uses a token based on the first char.
+ * 
+ * If a String uses one of these symbols then it is recognized as
+ * that type:
+ * 
+ * # = The description of the command. There may be zero to one defined.
+ * 
+ * ! = A required value for the command name. There can be zero to many defined.
+ * 
+ * ? = An optional value for the command name. There can be zero to many
+ * defined.
+ * 
+ * : = The regex value to match on for any values that are defined. There can be
+ * zero to one defined.
+ * 
+ * If a String does not use one of the above char, then it is considered a command.
  *
  * @see setCommandListener
  * @see defineCommand
