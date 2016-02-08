@@ -5,11 +5,12 @@
 GAB-CmdLine
 =======
 
-A GAB Social Command Line Parser
+The GAB Social Command Line Parser for Java.  The purpose of this project is to analyze and examine how I would create a command line parser for Java.  Comments are welcome.  Thank you.
 
 
 Build
 ---------
+Supports JDK 7 or 8
 Use Maven to build - `mvn package`.
 
 
