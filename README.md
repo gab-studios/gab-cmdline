@@ -13,6 +13,59 @@ Build
 Supports JDK 7 or 8.  Use Maven to build - `mvn package`.
 
 
+Example
+---------
+```text
+myApp [options] [target [target2 [target3] ...]]
+  Options: 
+  -help                  print this message
+  -version               print the version information and exit
+  -quiet                 be extra quiet
+  -verbose               be extra verbose
+  -debug                 print debugging information
+  -emacs                 produce logging information without adornments
+  -logfile <file>        use given file for log
+  -logger <classname>    the class which is to perform logging
+  -listener <classname>  add an instance of class as a project listener
+  -D<property>=<value>   use value for given property
+  -find <file>           search for buildfile towards the root of the
+                         filesystem and use it
+```
+
+```java
+// define a listener implmentation of the CommandListener interface.
+private class CmdLineListener implements CommandListener
+{
+    @Override
+    public void handle(final Command command)
+    {
+        System.out.println( command );
+    }
+}
+// create an instance of the listener.
+final CmdLineListener listener = new CmdLineListener();
+
+// define/declare the commands the parser should parse.
+CmdLine.defineCommand("-help, #print this message")
+       .defineCommand("-version, #print the version information and exit")
+       .defineCommand("-quiet, #be extra quiet")
+       .defineCommand("-verbose, #be extra verbose")
+       .defineCommand("-debug, #print debugging information")
+       .defineCommand("-emacs, #produce logging information without adornments")
+       .defineCommand("-logfile, !logFile, #use given file for log")
+       .defineCommand("-logger, !logClass, #the class which is to perform logging")
+       .defineCommand("-listener, !listenerClass, #add an instance of class as a project listener")
+       .defineCommand("-find, !buildFile, #search for buildfile towards the root of the filesystem and use it");
+
+Note:  The format of "-D<property>=<value>" is automatically supported and doesnt need to be defined.  
+If a -D<property>=<value> is seen on the command line, it is parsed and set 
+in the System properties.  In addition, a command is created and sent to the listener.
+
+// parse the command line args and pass matching commands to the listener for processing.
+CmdLine.parse( args, listener );
+```
+
+
 Dependencies
 ---------
 This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
@@ -20,7 +73,7 @@ This project has dependencies on the jar files under the ./lib directory.  Once 
 
 More Documentation
 ------------------
-Check our [wiki][].
+Check the project [wiki][].
 
 
 License
@@ -28,13 +81,11 @@ License
 This codebase is licensed under the Apache v2.0 License [license].
 
 
-Donations
+Feedback
 ---------
-We accept tips through [Gratipay][tip].
+Comments and feedback are greatly appreciated!!!
 
-[![Gratipay](https://img.shields.io/gratipay/sysdevone.svg?style=flat)](https://www.gratipay.com/sysdevone/)
 
 
 [license]:https://github.com/sysdevone/gab-cmdline/tree/master/LICENSE
 [wiki]:https://github.com/sysdevone/gab-cmdline/wiki
-[tip]:https://www.gratipay.com/sysdevone/
