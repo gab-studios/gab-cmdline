@@ -45,6 +45,8 @@ private class CmdLineListener implements CommandListener
 final CmdLineListener listener = new CmdLineListener();
 
 // define/declare the commands the parser should parse.
+// command names can start with any character that is not reserved.  reserved are !?#:
+// the commands listed below use the - (dash) to denote a command, but this is not required.
 CmdLine.defineCommand("-help, #print this message")
        .defineCommand("-version, #print the version information and exit")
        .defineCommand("-quiet, #be extra quiet")
