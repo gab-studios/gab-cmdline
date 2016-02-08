@@ -10,7 +10,7 @@ A GAB Social Command Line Parser
 
 Build
 ---------
-Use Maven to build - mvn package.
+Use Maven to build - `mvn package`.
 
 
 Dependencies
@@ -25,7 +25,7 @@ Check our [wiki][].
 
 License
 -------
-Code is under the Apache v2.0 License [license].
+This codebase is licensed under the Apache v2.0 License [license].
 
 
 Donations
