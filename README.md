@@ -7,9 +7,16 @@ GAB-CmdLine
 
 A GAB Social Command Line Parser
 
+
 Build
 ---------
 Use Maven to build - mvn package.
+
+
+Dependencies
+---------
+This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
+
 
 More Documentation
 ------------------
