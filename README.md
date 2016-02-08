@@ -1,5 +1,5 @@
-Branch - Integration: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=integration)](https://travis-ci.org/sysdevone/gab-cmdline)
-Master: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=master)](https://travis-ci.org/sysdevone/gab-cmdline)
+[![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=integration)](https://travis-ci.org/sysdevone/gab-cmdline)
+[![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=master)](https://travis-ci.org/sysdevone/gab-cmdline)
 
 
 GAB-CmdLine
