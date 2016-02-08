@@ -23,12 +23,11 @@ myApp [options] [target [target2 [target3] ...]]
   -quiet                 be extra quiet
   -verbose               be extra verbose
   -debug                 print debugging information
-  -emacs                 produce logging information without adornments
   -logfile <file>        use given file for log
   -logger <classname>    the class which is to perform logging
   -listener <classname>  add an instance of class as a project listener
   -D<property>=<value>   use value for given property
-  -find <file>           search for buildfile towards the root of the
+  -find <file>           search for file towards the root of the
                          filesystem and use it
 ```
 
@@ -51,11 +50,10 @@ CmdLine.defineCommand("-help, #print this message")
        .defineCommand("-quiet, #be extra quiet")
        .defineCommand("-verbose, #be extra verbose")
        .defineCommand("-debug, #print debugging information")
-       .defineCommand("-emacs, #produce logging information without adornments")
        .defineCommand("-logfile, !logFile, #use given file for log")
        .defineCommand("-logger, !logClass, #the class which is to perform logging")
        .defineCommand("-listener, !listenerClass, #add an instance of class as a project listener")
-       .defineCommand("-find, !buildFile, #search for buildfile towards the root of the filesystem and use it");
+       .defineCommand("-find, !buildFile, #search for file towards the root of the filesystem and use it");
 
 Note:  The format of "-D<property>=<value>" is automatically supported and doesnt need to be defined.  
 If a -D<property>=<value> is seen on the command line, it is parsed and set 
