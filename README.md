@@ -10,8 +10,7 @@ The GAB Social Command Line Parser for Java.  The purpose of this project is to 
 
 Build
 ---------
-Supports JDK 7 or 8
-Use Maven to build - `mvn package`.
+Supports JDK 7 or 8.  Use Maven to build - `mvn package`.
 
 
 Dependencies
