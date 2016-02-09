@@ -13,11 +13,35 @@ Build
 Supports JDK 7 or 8.  Use Maven to build - `mvn package`.
 
 
+Usage
+---------
+
+In order to parse the command line, you need to define what the commands are by calling Cmdline.defineCommand("xxx");
+
+```java
+CmdLine.defineCommand("-help, #print this message")
+```
+
+The string used in the defineCommand() method, contains tokens that must use one of these symbols in order for it to be recognized as that type:
+
+\# = The description of the command. There may be zero to one defined.
+
+! = A required value for the command name. There can be zero to many defined.
+
+? = An optional value for the command name. There can be zero to many defined.
+
+: = The regex value to match on for any values that are defined. There can be zero to one defined.
+
+... = A value ends with ... and is a list for the command name. There can be zero to one defined. This can be used with the ! and ? symbols
+
+If a token does not start with one of these tokens, then it is considered a command name.  There can be one to many  names that represent a single command, such as: 'f', 'file', 'filename' or '-f', '--file', '--filename'.
+
 Example
 ---------
+
 ```text
-myApp [options] [target [target2 [target3] ...]]
-  Options: 
+myApp [commands] [option1 [option2 [option3] ...]]
+  Commands: 
   -help                  print this message
   -version               print the version information and exit
   -quiet                 be extra quiet
@@ -64,7 +88,7 @@ in the System properties.  In addition, a command is created and sent to the lis
 // parse the command line args and pass matching commands to the listener for processing.
 CmdLine.parse( args, listener );
 ```
-
+Click for [more_examples][].
 
 Dependencies
 ---------
@@ -89,3 +113,4 @@ Comments and feedback are greatly appreciated!!!
 
 [license]:https://github.com/sysdevone/gab-cmdline/tree/master/LICENSE
 [wiki]:https://github.com/sysdevone/gab-cmdline/wiki
+[more_examples]:https://github.com/sysdevone/gab-cmdline/wiki/Examples
