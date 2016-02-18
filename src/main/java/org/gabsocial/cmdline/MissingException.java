@@ -20,7 +20,7 @@
 package org.gabsocial.cmdline;
 
 /**
- * An exception that is used if a required variable is missing from the command line.
+ * An exception that is used if a required token or arg is missing.
  * 
  * 
  * @author Gregory Brown (sysdevone)
