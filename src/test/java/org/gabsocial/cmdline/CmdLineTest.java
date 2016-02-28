@@ -620,8 +620,7 @@ public class CmdLineTest
     public void testDefineMultipleCommand2()
     {
         final CmdLineListener listener = new CmdLineListener();
-        CmdLine
-                .setApplicationName("myApp")
+        CmdLine.setApplicationName("myApp")
                 .setVersion("1.1.0")
                 .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt",
                         "#Load files into the system")
@@ -676,6 +675,184 @@ public class CmdLineTest
         }
         catch (final Exception e)
         {
+            Assert.fail(e.toString());
+        }
+    }
+    
+    @Test
+    public void testDefineMultipleCommandWithDefaultListener()
+    {
+        CmdLine.setApplicationName("myApp")
+                .setVersion("1.1.0")
+                .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt",
+                        "#Load files into the system")
+                .defineCommand("-l", "--list",
+                        "#List the files loaded into the system")
+                .defineCommand("-q", "--quit", "#Quit the application");
+        
+        final String[] args = new String[5];
+        args[0] = "-f";
+        args[1] = "=";
+        args[2] = "file1.txt";
+        args[3] = "-Dcom.gabsocial.cmdline.debug=true";
+        args[4] = "--list";
+        
+        try
+        {
+            List<Command> commands = CmdLine.parse(args);
+            Assert.assertTrue(commands.size() == 3);
+            
+            for (Command command : commands)
+            {
+                final String name = command.getName();
+                // System.out.println( "'" + command + "'");
+                
+                if (name.equals("-f"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(command.hasVariables());
+                    
+                    List<String> values = command.getValues("fileNames");
+                    Assert.assertTrue(values != null);
+                    Assert.assertTrue(values.size() == 1);
+                    
+                    String value = values.get(0);
+                    Assert.assertTrue(value != null);
+                    Assert.assertTrue(value.length() > 0);
+                    Assert.assertTrue(value.equals("file1.txt"));
+                }
+                else if (name.equals("-Dcom.gabsocial.cmdline.debug"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(command.hasVariables());
+                    
+                    List<String> values = command
+                            .getValues("com.gabsocial.cmdline.debug");
+                    Assert.assertTrue(values != null);
+                    Assert.assertTrue(values.size() == 1);
+                    
+                    String value = values.get(0);
+                    Assert.assertTrue(value != null);
+                    Assert.assertTrue(value.length() > 0);
+                    Assert.assertTrue(value.equals("true"));
+                }
+                else if (name.equals("--list"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(!command.hasVariables());
+                }
+            }
+            Assert.assertTrue(true);
+        }
+        catch (final Exception e)
+        {
+            e.printStackTrace();
+            Assert.fail(e.toString());
+        }
+    }
+    
+    @Test
+    public void testDefineMultipleCommandWithDefaultListenerAndSecondListener()
+    {
+        final CmdLineListener listener = new CmdLineListener();
+        CmdLine.setApplicationName("myApp")
+                .setVersion("1.1.0")
+                .defineCommand("-f", "--file", "!fileNames...", ":file\\d.txt",
+                        "#Load files into the system")
+                .defineCommand("-l", "--list",
+                        "#List the files loaded into the system")
+                .defineCommand("-q", "--quit", "#Quit the application");
+        
+        final String[] args = new String[5];
+        args[0] = "-f";
+        args[1] = "=";
+        args[2] = "file1.txt";
+        args[3] = "-Dcom.gabsocial.cmdline.debug=true";
+        args[4] = "--list";
+        
+        try
+        {
+            List<Command> commands = CmdLine.parse(args, listener);
+            Assert.assertTrue(commands.size() == 3);
+            
+            for (Command command : commands)
+            {
+                final String name = command.getName();
+                // System.out.println( "'" + command + "'");
+                
+                if (name.equals("-f"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(command.hasVariables());
+                    
+                    List<String> values = command.getValues("fileNames");
+                    Assert.assertTrue(values != null);
+                    Assert.assertTrue(values.size() == 1);
+                    
+                    String value = values.get(0);
+                    Assert.assertTrue(value != null);
+                    Assert.assertTrue(value.length() > 0);
+                    Assert.assertTrue(value.equals("file1.txt"));
+                }
+                else if (name.equals("-Dcom.gabsocial.cmdline.debug"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(command.hasVariables());
+                    
+                    List<String> values = command
+                            .getValues("com.gabsocial.cmdline.debug");
+                    Assert.assertTrue(values != null);
+                    Assert.assertTrue(values.size() == 1);
+                    
+                    String value = values.get(0);
+                    Assert.assertTrue(value != null);
+                    Assert.assertTrue(value.length() > 0);
+                    Assert.assertTrue(value.equals("true"));
+                }
+                else if (name.equals("--list"))
+                {
+                    Assert.assertTrue(command != null);
+                    Assert.assertTrue(!command.hasVariables());
+                }
+            }
+            
+            Assert.assertTrue(listener.getCount() == 3);
+            
+            Command command = listener.getCommand("-f");
+            Assert.assertTrue(command != null);
+            Assert.assertTrue(command.hasVariables());
+            
+            List<String> values = command.getValues("fileNames");
+            Assert.assertTrue(values != null);
+            Assert.assertTrue(values.size() == 1);
+            
+            String value = values.get(0);
+            Assert.assertTrue(value != null);
+            Assert.assertTrue(value.length() > 0);
+            Assert.assertTrue(value.equals("file1.txt"));
+            
+            command = listener.getCommand("-Dcom.gabsocial.cmdline.debug");
+            Assert.assertTrue(command != null);
+            Assert.assertTrue(command.hasVariables());
+            
+            values = command.getValues("com.gabsocial.cmdline.debug");
+            Assert.assertTrue(values != null);
+            Assert.assertTrue(values.size() == 1);
+            
+            value = values.get(0);
+            Assert.assertTrue(value != null);
+            Assert.assertTrue(value.length() > 0);
+            Assert.assertTrue(value.equals("true"));
+            
+            command = listener.getCommand("--list");
+            Assert.assertTrue(command != null);
+            Assert.assertTrue(!command.hasVariables());
+            
+            Assert.assertTrue(true);
+        }
+        catch (final Exception e)
+        {
+            e.printStackTrace();
             Assert.fail(e.toString());
         }
     }
@@ -839,8 +1016,7 @@ public class CmdLineTest
         final CmdLineListener listener = new CmdLineListener();
         
         CmdLine.defineCommand("file, !file, !files..., :file\\d.txt")
-            .setApplicationName("myApp")
-            .setVersion("1.1.0");
+                .setApplicationName("myApp").setVersion("1.1.0");
         
         final String[] args = new String[5];
         args[0] = "-Dcom.gabsocial.cmdline.debug=true";
