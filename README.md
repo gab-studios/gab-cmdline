@@ -8,15 +8,27 @@ GAB-CmdLine
 The GAB Social Command Line Parser for Java.  The purpose of this project is to analyze and examine how I would create a command line parser for Java.  Comments are welcome.  Thank you.
 
 
+Required
+---------
+This project requires the following: 
+
+    * Java 7+
+    * Maven
+
+
+Dependencies
+---------
+This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
+
+
 Build
 ---------
-Supports JDK 7 or 8.  Use Maven to build - `mvn package`.
-
+Use Maven to build - `mvn package`.
 
 Usage
 ---------
 
-In order to parse the command line, you need to define what the commands are by calling Cmdline.defineCommand("xxx");
+In order to parse the command line, you need to define what the commands are by calling `Cmdline.defineCommand("xxx");`
 
 ```java
 CmdLine.defineCommand("-help, #print this message")
@@ -56,7 +68,7 @@ myApp [commands] [option1 [option2 [option3] ...]]
 ```
 
 ```java
-// define a listener implmentation of the CommandListener interface.
+// define a listener implementation of the CommandListener interface.
 private class CmdLineListener implements CommandListener
 {
     @Override
@@ -79,30 +91,26 @@ CmdLine.defineCommand("-help, #print this message")
        .defineCommand("-logfile, !logFile, #use given file for log")
        .defineCommand("-logger, !logClass, #the class which is to perform logging")
        .defineCommand("-listener, !listenerClass, #add an instance of class as a project listener")
-       .defineCommand("-find, !buildFile, #search for file towards the root of the filesystem and use it");
+       .defineCommand("-find, !buildFile, #search for file towards the root of the file system and use it");
 
 Note:  The format of "-D<property>=<value>" is automatically supported and doesnt need to be defined.  
 If a -D<property>=<value> is seen on the command line, it is parsed and set 
 in the System properties.  In addition, a command is created and sent to the listener.
 
 // parse the command line args and pass matching commands to the listener for processing.
-CmdLine.parse( args, listener );
+final List<command> = CmdLine.parse( args, listener );
 ```
-Click for [more_examples][].
-
-Dependencies
----------
-This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
+Click for more [examples] [].
 
 
 More Documentation
 ------------------
-Check the project [wiki][].
+Check the project [wiki] [].
 
 
 License
 -------
-This codebase is licensed under the Apache v2.0 License [license].
+This codebase is licensed under the [Apache v2.0 License] [license].
 
 
 Feedback
@@ -111,6 +119,6 @@ Comments and feedback are greatly appreciated!!!
 
 
 
-[license]:https://github.com/sysdevone/gab-cmdline/tree/master/LICENSE
-[wiki]:https://github.com/sysdevone/gab-cmdline/wiki
-[more_examples]:https://github.com/sysdevone/gab-cmdline/wiki/Examples
+[license]: https://github.com/sysdevone/gab-cmdline/tree/master/LICENSE
+[wiki]: https://github.com/sysdevone/gab-cmdline/wiki
+[examples]: https://github.com/sysdevone/gab-cmdline/wiki/Examples
