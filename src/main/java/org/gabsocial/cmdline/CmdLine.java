@@ -19,6 +19,7 @@
 
 package org.gabsocial.cmdline;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -49,27 +50,32 @@ import org.gabsocial.gabvalidate.Validate;
  * definitions
  *
  * CmdLine.parse( args, listener );
+ * 
+ * or parse the command line arguments and get the returned List of Command
+ * instances. 
+ * 
+ * List commands = CmdLine.parse( args );
  *
  * 3. clear parser to release resources.
  *
  * CmdLine.clear();
- * 
+ *
  * CmdLine.defineCommand("xxxx") uses a token based on the first char.
- * 
- * If a String uses one of these symbols then it is recognized as
- * that type:
- * 
+ *
+ * If a String uses one of these symbols then it is recognized as that type:
+ *
  * # = The description of the command. There may be zero to one defined.
- * 
+ *
  * ! = A required value for the command name. There can be zero to many defined.
- * 
+ *
  * ? = An optional value for the command name. There can be zero to many
  * defined.
- * 
+ *
  * : = The regex value to match on for any values that are defined. There can be
  * zero to one defined.
- * 
- * If a String does not use one of the above char, then it is considered a command.
+ *
+ * If a String does not use one of the above char, then it is considered a
+ * command.
  *
  * @see setCommandListener
  * @see defineCommand
@@ -81,8 +87,6 @@ import org.gabsocial.gabvalidate.Validate;
 public class CmdLine
 {
     
-    private static Trie                                 WORD_SUGGESTION_TRIE;
-    
     /*
      * A map that holds the key of a command string and a value of a command
      * definition.
@@ -93,6 +97,12 @@ public class CmdLine
      * The command line tokenizer
      */
     private static final CommandLineTokenizer           COMMNAND_LINE_TOKENIZER;
+    
+    /*
+     * The listener that will handle commands as they are processed, to the main
+     * cmdline class.
+     */
+    private static final List<Command>                  DEFAULT_COMMAND_LIST;
     
     /*
      * Regex to split the define command method
@@ -137,6 +147,12 @@ public class CmdLine
      */
     private static final Set<String>                    VARIABLE_NAME_SET;
     
+    /*
+     * A Trie that holds the command names. This data structure is used for word
+     * suggestion if the command is not found.
+     */
+    private static final Trie                           WORD_SUGGESTION_TRIE;
+    
     /**
      * The CmdLine constructor.
      */
@@ -147,6 +163,7 @@ public class CmdLine
         VARIABLE_NAME_SET = new HashSet<String>();
         DEFINED_COMMAND_TOKENIZER = new DefinedCommandTokenizer();
         COMMNAND_LINE_TOKENIZER = new CommandLineTokenizer();
+        DEFAULT_COMMAND_LIST = new ArrayList<Command>();
         INSTANCE = new CmdLine();
     }
     
@@ -173,12 +190,11 @@ public class CmdLine
      */
     public static CmdLine clear()
     {
-        
+        CmdLine.s_commandListener = null;
         CmdLine.COMMAND_DEFINITION_MAP.clear();
         CmdLine.VARIABLE_NAME_SET.clear();
-        CmdLine.s_commandListener = null;
         CmdLine.WORD_SUGGESTION_TRIE.clear();
-        
+        CmdLine.DEFAULT_COMMAND_LIST.clear();
         return (CmdLine.INSTANCE);
     }
     
@@ -257,8 +273,8 @@ public class CmdLine
         
         final CommandDefinition command = new CommandDefinition();
         
-        // a list counter. Only one list can exist.
-        int xorListCount = 0;
+        // a list flag. Only one list can exist.
+        boolean doesListExist = false;
         
         // a flag to mark if an optional var was created. If this is true and an
         // attempt to create a required var is made, then an exception will be
@@ -284,7 +300,7 @@ public class CmdLine
                     else
                     {
                         command.addName(name);
-                        WORD_SUGGESTION_TRIE.add(name);
+                        CmdLine.WORD_SUGGESTION_TRIE.add(name);
                     }
                     break;
                 }
@@ -342,7 +358,7 @@ public class CmdLine
                                 "Error: An optional variable has already been defined before this required variable.  "
                                         + "Required variables must be defined before optional variables.'"));
                     }
-                    else if (xorListCount > 0)
+                    else if (doesListExist)
                     {
                         throw (new UnsupportedException(
                                 "Error: A List has already been defined for '"
@@ -351,7 +367,7 @@ public class CmdLine
                     }
                     else
                     {
-                        ++xorListCount;
+                        doesListExist = true;
                         CmdLine.addVariableName(name);
                         command.setRequiredVariableList(name);
                     }
@@ -366,7 +382,7 @@ public class CmdLine
                 }
                 case OPTIONAL_LIST_VALUE:
                 {
-                    if (xorListCount > 0)
+                    if (doesListExist)
                     {
                         throw (new UnsupportedException(
                                 "Error: A List has already been defined for '"
@@ -375,7 +391,7 @@ public class CmdLine
                     }
                     else
                     {
-                        ++xorListCount;
+                        doesListExist = true;
                         CmdLine.addVariableName(name);
                         command.setOptionalVariableList(name);
                         isOptionalVarDefined = true;
@@ -390,6 +406,9 @@ public class CmdLine
                 }
             }
         }
+        
+        if (command.getNames().isEmpty()) { throw (new MissingException(
+                "Error:  The command name was not defined and is missing.")); }
         
         return (command);
     }
@@ -529,7 +548,7 @@ public class CmdLine
      *            The arguments from the command line.
      * @return The CmdLine instance. Used for chaining calls.
      */
-    public static CmdLine parse(final String[] args)
+    public static List<Command> parse(final String[] args)
     {
         Validate.defineBoolean(
                 (args != null) && (args.length > 0)
@@ -538,7 +557,10 @@ public class CmdLine
         
         final List<String> tokens = CmdLine.tokenizeCmdLineArgs(args);
         CmdLine.processCmdLineTokens(tokens);
-        return (CmdLine.INSTANCE);
+        
+        final List<Command> commands = new ArrayList<Command>(
+                CmdLine.DEFAULT_COMMAND_LIST);
+        return (commands);
     }
     
     /**
@@ -550,7 +572,7 @@ public class CmdLine
      *            A listener that will handle the callbacks.
      * @return The CmdLine instance. Used for chaining calls.
      */
-    public static CmdLine parse(final String[] args,
+    public static List<Command> parse(final String[] args,
             final CommandListener commandListener)
     {
         CmdLine.setCommandListener(commandListener);
@@ -567,7 +589,7 @@ public class CmdLine
         assert (tokens.size() <= CmdLine.MAX_LENGTH) : "The parameter 'tokens' must be less than or equal to "
                 + CmdLine.MAX_LENGTH;
         
-        String tokenValue = tokens.remove(0);
+        final String tokenValue = tokens.remove(0);
         
         // check to see that a command definition exists for the current token.
         if (CmdLine.COMMAND_DEFINITION_MAP.containsKey(tokenValue))
@@ -575,10 +597,14 @@ public class CmdLine
             // if defined, then create a command.
             final Command command = CmdLine.createCommand(tokenValue, tokens);
             
+            CmdLine.DEFAULT_COMMAND_LIST.add(command);
+            
             // if the listener was set, then notify the listener of the created
             // command.
             if (CmdLine.s_commandListener != null)
             {
+                // TODO - thread call to remove from main thread. add timeout
+                // for processing.
                 CmdLine.s_commandListener.handle(command);
             }
             
@@ -602,7 +628,7 @@ public class CmdLine
             {
                 // if tokenvalue and not a system property then it is not
                 // defined.
-                final List<String> suggestedWords = WORD_SUGGESTION_TRIE
+                final List<String> suggestedWords = CmdLine.WORD_SUGGESTION_TRIE
                         .getWords(tokenValue);
                 
                 throw (new UnsupportedException("Error: The command name '"
@@ -651,8 +677,12 @@ public class CmdLine
                 final Command command = new Command(valueString);
                 command.addVariable(systemPropertyKey, systemPropertyValue);
                 
+                CmdLine.DEFAULT_COMMAND_LIST.add(command);
+                
                 if (CmdLine.s_commandListener != null)
                 {
+                    // TODO - thread call to remove from main thread. add
+                    // timeout for processing.
                     CmdLine.s_commandListener.handle(command);
                 }
             }
