@@ -46,6 +46,24 @@ public class CmdLineNegativeTest
         CmdLine.clear();
     }
     
+    
+    @Test
+    public void testDefineNoCommand()
+    {
+        
+        try
+        {
+            
+            CmdLine.defineCommand("!fileName, ?fileName1, :file\\d.txt, #Load files into the system");
+            
+            Assert.fail();
+        }
+        catch (MissingException e)
+        {
+            Assert.assertTrue(true);
+        }
+    }
+    
     @Test
     public void testDefineCommand()
     {
