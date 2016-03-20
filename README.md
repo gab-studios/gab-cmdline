@@ -1,7 +1,8 @@
-[![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=integration)](https://travis-ci.org/sysdevone/gab-cmdline)
-[![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=master)](https://travis-ci.org/sysdevone/gab-cmdline)
+Master: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=master)](https://travis-ci.org/sysdevone/gab-cmdline)
 [![codecov.io](https://codecov.io/github/sysdevone/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/sysdevone/gab-cmdline?branch=master)
 
+Integration: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=integration)](https://travis-ci.org/sysdevone/gab-cmdline)
+[![codecov.io](https://codecov.io/github/sysdevone/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/sysdevone/gab-cmdline?branch=integration)
 
 GAB-CmdLine
 =======
