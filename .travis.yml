@@ -1,9 +1,16 @@
 language: java
+
 git:
   depth: 3
+
 install: true
+
 jdk:
   - oraclejdk8
   - oraclejdk7
-# uncomment this line if your project needs to run something other than `rake`:
-# script: bundle exec rspec spec
+  
+before_script:
+  - pip install --user codecov
+
+after_success:
+  - codecov
