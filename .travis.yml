@@ -14,3 +14,19 @@ before_script:
 
 after_success:
   - codecov
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "lxxVDW9iGoBF4Z8r4A2uOIDlrJ1EM8ZeJE6PXJbwKwlu4poPEXBGScIm43z4Wt9upq0YH4tWyhNz9fTc8QCLmYfPz/oD+c4/QBfNK1oG/cOcZQEimFkHzjtmiVohdNNT9n4xIHbRmKop5X5TpGDezxUJhokKNnSXulC76oYqWD+H7OqKLNROaMLljfbGq9ENliz9lktlNho3jsUp0cffmv2UjnceFJAlxPePF0DFJ0Y3HkhjoR9E/KAV08kjAlGi+wKhAXBSG/YcOG1hmWGOT8XOTGDuhdVxr6oiYcPCNe4UiCpLsRpnZEWH+RvYy3SxG4OwyeZ8OUytVghpd0RldXpAxo7ljddp7v6KxyqfXb/nG120Btr5qsdh6niMIDGJHtMusZ1P8pZP0ALpi7xSHYAovei6iuoRZRI1dWvdwX2rvy05Lz9SvGcHqoZkUaZ/FGR4Bu2nsw0hwCC8eevEevtCG+dnyhUfQ+4SU1pRhCBl+ITODNIQ4l9gKoipB1fA1J5Bi3KU8vmnPbyMgqSOiKQd0ZEZgZy50/Kp+S+QIqaqojzCUTVFgPIz5BZU2am2w6Se9sTOqtWJVTsMMjoauuqFQdZrgb0rX7EF8fymIBI+VE5i3YdT2fxojmV+eMf1D5wf2xOXIEoKmVYlU1T6Kb5/QlNgT7Rid6ujX04AmDw="
+
+addons:
+  coverity_scan:
+    project:
+      name: "sysdevone/gab-cmdline"
+      description: "Build submitted via Travis CI"
+    notification_email: sysdevone@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan
