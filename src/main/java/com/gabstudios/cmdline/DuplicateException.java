@@ -17,7 +17,7 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 /**
  * An exception that is used if a command or variable are already defined.

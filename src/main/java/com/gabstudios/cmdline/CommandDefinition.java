@@ -17,12 +17,12 @@
  *****************************************************************************************
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gabsocial.gabvalidate.Validate;
+import com.gabstudios.validate.Validate;
 
 
 /**
@@ -66,7 +66,7 @@ public class CommandDefinition
     protected void addName(final String name)
     {
         Validate.defineString(name).testNotNullEmpty()
-                .throwExceptionOnFailedValidation().validate();
+                .throwValidationExceptionOnFail().validate();
         
         this._names.add(name);
     }
@@ -175,7 +175,7 @@ public class CommandDefinition
     protected void setDescription(final String description)
     {
         Validate.defineString(description).testNotNullEmpty()
-                .throwExceptionOnFailedValidation().validate();
+                .throwValidationExceptionOnFail().validate();
         
         this._description = description;
     }
@@ -183,7 +183,7 @@ public class CommandDefinition
     protected void setRegexValue(final String regexValue)
     {
         Validate.defineString(regexValue).testNotNullEmpty()
-                .throwExceptionOnFailedValidation().validate();
+                .throwValidationExceptionOnFail().validate();
         
         this._regexValue = regexValue;
     }

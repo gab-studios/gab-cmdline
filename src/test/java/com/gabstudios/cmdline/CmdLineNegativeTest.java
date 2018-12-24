@@ -17,9 +17,9 @@
  *****************************************************************************************
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
-import org.gabsocial.gabvalidate.ValidateException;
+import com.gabstudios.validate.ValidateException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

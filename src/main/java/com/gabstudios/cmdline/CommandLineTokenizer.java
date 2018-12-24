@@ -17,13 +17,13 @@
  *****************************************************************************************
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.gabsocial.gablogging.LogProvider;
-import org.gabsocial.gablogging.LogService;
+import com.gabstudios.logging.LogProvider;
+import com.gabstudios.logging.LogService;
 
 
 /*
@@ -73,7 +73,7 @@ public class CommandLineTokenizer
         for( String argString : args )
         {
             
-            logService.logDetail(this.getClass(), "tokenize",
+            logService.logDebug(this.getClass(), "tokenize",
                     "Before equals split: " + argString);
             
             //
@@ -81,7 +81,7 @@ public class CommandLineTokenizer
             // ---------------------------
             final String[] argsAfterEquals = argString.split("=");
             
-            logService.logDetail(this.getClass(), "tokenize",
+            logService.logDebug(this.getClass(), "tokenize",
                     "After equals split length: " + argsAfterEquals.length);
             
             //
@@ -90,7 +90,7 @@ public class CommandLineTokenizer
             for( String argAfterEqual :argsAfterEquals)
             {
                 
-                logService.logDetail(this.getClass(), "tokenize",
+                logService.logDebug(this.getClass(), "tokenize",
                         "Before comma split: " + argAfterEqual);
                 
                 //
@@ -98,7 +98,7 @@ public class CommandLineTokenizer
                 // ---------------------------
                 final String[] argsAfterCommas = argAfterEqual.split(",");
                 
-                logService.logDetail(this.getClass(), "tokenize",
+                logService.logDebug(this.getClass(), "tokenize",
                         "After comma split length: " + argsAfterCommas.length);
                 
                 //
