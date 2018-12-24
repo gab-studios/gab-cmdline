@@ -1,9 +1,6 @@
-Master: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=master)](https://travis-ci.org/sysdevone/gab-cmdline)
-[![codecov.io](https://codecov.io/github/sysdevone/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/sysdevone/gab-cmdline?branch=master)
-[![Coverity Scan](https://scan.coverity.com/projects/8317/badge.svg)](https://scan.coverity.com/projects/sysdevone-gab-cmdline)
-
-Integration: [![Build Status](https://travis-ci.org/sysdevone/gab-cmdline.svg?branch=integration)](https://travis-ci.org/sysdevone/gab-cmdline)
-[![codecov.io](https://codecov.io/github/sysdevone/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/sysdevone/gab-cmdline?branch=integration)
+Master | [![Build Status](https://travis-ci.org/gab-studios/gab-cmdline.svg?branch=master)](https://travis-ci.org/gab-studios/gab-cmdline) | [![codecov.io](https://codecov.io/github/gab-studios/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/gab-studios/gab-cmdline?branch=master)
+---: | :---: | :---:
+Integration | [![Build Status](https://travis-ci.org/gab-studios/gab-cmdline.svg?branch=integration)](https://travis-ci.org/gab-studios/gab-cmdline) | [![codecov.io](https://codecov.io/github/gab-studios/gab-cmdline/coverage.svg?branch=integration)](https://codecov.io/github/gab-studios/gab-cmdline?branch=integration)
 
 GAB-CmdLine
 =======
@@ -15,13 +12,35 @@ Required
 ---------
 This project requires the following: 
 
-    * Java 7+
+    * Java 8
     * Maven
 
 
-Dependencies
+Maven Dependency
 ---------
-This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
+```java
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-cmdline</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-collection</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-logging</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-validate</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
 
 
 
@@ -104,17 +123,22 @@ in the System properties.  In addition, a command is created and sent to the lis
 // parse the command line args and pass matching commands to the listener for processing.
 final List<command> = CmdLine.parse( args, listener );
 ```
-Click for more [examples] [].
+Click for more [examples].
 
 
 More Documentation
 ------------------
-Check the project [wiki] [].
+Check the project [wiki].
+
+
+Copyright
+-------
+[Copyright 2016 Gregory Brown]
 
 
 License
 -------
-This codebase is licensed under the [Apache v2.0 License] [license].
+This codebase is licensed under the [Apache v2.0 License].
 
 
 Feedback
@@ -122,7 +146,7 @@ Feedback
 Comments and feedback are greatly appreciated!!!
 
 
-
-[license]: https://github.com/sysdevone/gab-cmdline/tree/master/LICENSE
-[wiki]: https://github.com/sysdevone/gab-cmdline/wiki
-[examples]: https://github.com/sysdevone/gab-cmdline/wiki/Examples
+[Copyright 2016 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
+[Apache v2.0 License]: https://github.com/gab-studios/gab-cmdline/tree/master/LICENSE.txt
+[wiki]: https://github.com/gab-studios/gab-cmdline/wiki
+[examples]: https://github.com/gab-studios/gab-cmdline/wiki/Examples

@@ -14,3 +14,4 @@ before_script:
 after_success:
   - codecov
   - mvn clean test jacoco:report coveralls:report
+  
