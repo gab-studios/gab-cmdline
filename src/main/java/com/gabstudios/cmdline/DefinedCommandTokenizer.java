@@ -17,13 +17,13 @@
  *****************************************************************************************
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.gabsocial.gablogging.LogProvider;
-import org.gabsocial.gablogging.LogService;
+import com.gabstudios.logging.LogProvider;
+import com.gabstudios.logging.LogService;
 
 
 /**
@@ -175,7 +175,7 @@ public class DefinedCommandTokenizer
             for (String argString : args)
             {
                 // equals
-                logService.logDetail(this.getClass(), "tokenize",
+                logService.logDebug(this.getClass(), "tokenize",
                         "Before equals split: " + argString);
                 
                 //
@@ -183,7 +183,7 @@ public class DefinedCommandTokenizer
                 // ---------------------------
                 final String[] argsAfterEquals = argString.split("=");
                 
-                logService.logDetail(this.getClass(), "tokenize",
+                logService.logDebug(this.getClass(), "tokenize",
                         "After equals split length: " + argsAfterEquals.length);
                 
                 //
@@ -194,7 +194,7 @@ public class DefinedCommandTokenizer
                     
                     // commas
                     
-                    logService.logDetail(this.getClass(), "tokenize",
+                    logService.logDebug(this.getClass(), "tokenize",
                             "Before comma split: " + argAfterEquals);
                     
                     //
@@ -202,7 +202,7 @@ public class DefinedCommandTokenizer
                     // ---------------------------
                     final String[] argsAfterCommas = argAfterEquals.split(",");
                     
-                    logService.logDetail(this.getClass(), "tokenize",
+                    logService.logDebug(this.getClass(), "tokenize",
                             "After comma split length: "
                                     + argsAfterCommas.length);
                     //

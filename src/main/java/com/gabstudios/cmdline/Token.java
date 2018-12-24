@@ -17,7 +17,7 @@
  *****************************************************************************************
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 /**
  * This is used by the DefinedCommandTokenizer to represent the different types of settings.

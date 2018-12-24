@@ -16,7 +16,7 @@
  *
  *****************************************************************************************
  */
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 import java.util.HashMap;
 import java.util.List;

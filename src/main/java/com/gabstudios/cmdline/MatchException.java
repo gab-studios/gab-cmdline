@@ -17,21 +17,31 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.cmdline;
+package com.gabstudios.cmdline;
 
 /**
- * This interface handles the <code>Command</code> instances that are processed
- * when the parse(...) method is called.
+ * An exception that is used if a match fails when the regex value has been defined.
  * 
  * 
  * @author Gregory Brown (sysdevone)
  * 
  */
-public interface CommandListener
+public class MatchException extends RuntimeException
 {
+
     /**
-     * Handles the parser callbacks when a Command is created.
-     * @param command A Command instance.
+     * Serialized version number.
      */
-    public void handle(Command command);
+    private static final long serialVersionUID = 2425601012570939723L;
+
+    /**
+     * Constructor that takes a message.
+     * 
+     * @param message
+     *            A <code>String</code> message.
+     */
+    protected MatchException(final String message)
+    {
+        super(message);
+    }
 }
