@@ -16,9 +16,25 @@ This project requires the following:
     * Maven
 
 
-Dependencies
+Maven Dependency
 ---------
-This project has dependencies on the jar files under the ./lib directory.  Once those files have matured, they will be added to the Maven central repository.
+```java
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-collection</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-logging</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+   <groupId>com.gabstudios</groupId>
+   <artifactId>gab-validate</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
 
 
 
