@@ -133,7 +133,7 @@ Check the project [wiki].
 
 Copyright
 -------
-[Copyright 2015 Gregory Brown]
+[Copyright 2016 Gregory Brown]
 
 
 License
@@ -146,7 +146,7 @@ Feedback
 Comments and feedback are greatly appreciated!!!
 
 
-[Copyright 2015 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
+[Copyright 2016 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
 [Apache v2.0 License]: https://github.com/gab-studios/gab-cmdline/tree/master/LICENSE.txt
 [wiki]: https://github.com/gab-studios/gab-cmdline/wiki
 [examples]: https://github.com/gab-studios/gab-cmdline/wiki/Examples
