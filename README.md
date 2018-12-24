@@ -117,7 +117,7 @@ in the System properties.  In addition, a command is created and sent to the lis
 // parse the command line args and pass matching commands to the listener for processing.
 final List<command> = CmdLine.parse( args, listener );
 ```
-Click for more [examples] [].
+Click for more [examples].
 
 
 More Documentation
