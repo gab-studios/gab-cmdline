@@ -21,6 +21,12 @@ Maven Dependency
 ```java
 <dependency>
    <groupId>com.gabstudios</groupId>
+   <artifactId>gab-cmdline</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+</dependency>
+
+<dependency>
+   <groupId>com.gabstudios</groupId>
    <artifactId>gab-collection</artifactId>
    <version>1.0.0-SNAPSHOT</version>
 </dependency>
