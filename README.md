@@ -122,12 +122,17 @@ Click for more [examples] [].
 
 More Documentation
 ------------------
-Check the project [wiki] [].
+Check the project [wiki].
+
+
+Copyright
+-------
+[Copyright 2015 Gregory Brown]
 
 
 License
 -------
-This codebase is licensed under the [Apache v2.0 License] [license].
+This codebase is licensed under the [Apache v2.0 License].
 
 
 Feedback
@@ -135,7 +140,7 @@ Feedback
 Comments and feedback are greatly appreciated!!!
 
 
-
-[license]: https://github.com/gab-studios/gab-cmdline/tree/master/LICENSE
+[Copyright 2015 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
+[Apache v2.0 License]: https://github.com/gab-studios/gab-cmdline/tree/master/LICENSE.txt
 [wiki]: https://github.com/gab-studios/gab-cmdline/wiki
 [examples]: https://github.com/gab-studios/gab-cmdline/wiki/Examples
