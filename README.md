@@ -38,7 +38,7 @@ Maven Dependency
 <dependency>
    <groupId>com.gabstudios</groupId>
    <artifactId>gab-validate</artifactId>
-   <version>1.0.0-SNAPSHOT</version>
+   <version>1.0.0</version>
 </dependency>
 ```
 
