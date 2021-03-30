@@ -50,6 +50,9 @@
 		<github.global.server>github</github.global.server>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMddhhmm</maven.build.timestamp.format>
+  		<sonar.projectKey>gab-studios_gab-cmdline</sonar.projectKey>
+  		<sonar.organization>gab-studios</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
