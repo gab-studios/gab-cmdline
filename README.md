@@ -12,7 +12,7 @@ Required
 ---------
 This project requires the following: 
 
-    * Java 8
+    * Java 8 or 11
     * Maven
 
 
