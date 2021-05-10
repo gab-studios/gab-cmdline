@@ -12,7 +12,7 @@ Required
 ---------
 This project requires the following: 
 
-    * Java 8
+    * Java 8 or 11
     * Maven
 
 
@@ -38,7 +38,7 @@ Maven Dependency
 <dependency>
    <groupId>com.gabstudios</groupId>
    <artifactId>gab-validate</artifactId>
-   <version>1.0.0-SNAPSHOT</version>
+   <version>1.0.0</version>
 </dependency>
 ```
 
@@ -146,7 +146,7 @@ Feedback
 Comments and feedback are greatly appreciated!!!
 
 
-[Copyright 2016 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
+[Copyright 2016 2021 Gregory Brown]: https://github.com/gab-studios/gab-cmdline/tree/master/COPYRIGHT.txt
 [Apache v2.0 License]: https://github.com/gab-studios/gab-cmdline/tree/master/LICENSE.txt
 [wiki]: https://github.com/gab-studios/gab-cmdline/wiki
 [examples]: https://github.com/gab-studios/gab-cmdline/wiki/Examples
