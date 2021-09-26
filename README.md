@@ -1,6 +1,4 @@
-Master | [![Build Status](https://travis-ci.org/gab-studios/gab-cmdline.svg?branch=master)](https://travis-ci.org/gab-studios/gab-cmdline) | [![codecov.io](https://codecov.io/github/gab-studios/gab-cmdline/coverage.svg?branch=master)](https://codecov.io/github/gab-studios/gab-cmdline?branch=master)
----: | :---: | :---:
-Integration | [![Build Status](https://travis-ci.org/gab-studios/gab-cmdline.svg?branch=integration)](https://travis-ci.org/gab-studios/gab-cmdline) | [![codecov.io](https://codecov.io/github/gab-studios/gab-cmdline/coverage.svg?branch=integration)](https://codecov.io/github/gab-studios/gab-cmdline?branch=integration)
+
 
 GAB-CmdLine
 =======
